@@ -51,6 +51,32 @@ def sort_by_cohort(filename):
 
     # Code goes here
 
+    our_data = open(filename,"r")
+
+    for record in our_data:
+        record = record.strip().split("|")
+        cohort = record[4]
+        first_name = record[0]
+        last_name = record[1]
+        full_name = first_name + " " + last_name
+        if cohort == "Fall 2015":
+            fall_15.append(full_name)
+        elif cohort == "Summer 2016":
+            summer_16.append(full_name)
+        elif cohort == "Spring 2016":
+            spring_16.append(full_name)
+        elif cohort == "Winter 2016":
+            winter_16.append(full_name)
+        elif cohort == "G":
+            ghosts.append(full_name)
+
+    # ourlists = [winter_16, spring_16, summer_16, fall_15, ghosts]
+    
+    # for people in ourlists:
+    #     people = people.sort()
+    
+    all_students = [fall_15, winter_16, summer_16, spring_16, ghosts]
+
     return all_students
 
 
