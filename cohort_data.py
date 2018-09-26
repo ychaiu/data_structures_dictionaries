@@ -15,7 +15,9 @@ def unique_houses(filename):
     """
     houses = set()
 
-    for record in filename:
+    our_data = open(filename, "r")
+
+    for record in our_data:
         #print(record)
         record = record.split("|")
         house = record[2]
@@ -26,7 +28,6 @@ def unique_houses(filename):
 
     return sorted(houses)
 
-print(unique_houses(open("cohort_data.txt", "r")))
 def sort_by_cohort(filename):
     """TODO: Return a list of all cohort lists, including ghosts but not instructors.
 
@@ -193,9 +194,9 @@ def find_house_members_by_student_name(student_list):
 
 
 
-# if __name__ == "__main__":
-#     import doctest
+if __name__ == "__main__":
+    import doctest
 
-#     result = doctest.testmod()
-#     if result.failed == 0:
-#         print("ALL TESTS PASSED")
+    result = doctest.testmod()
+    if result.failed == 0:
+        print("ALL TESTS PASSED")
