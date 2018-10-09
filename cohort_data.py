@@ -75,7 +75,7 @@ def sort_by_cohort(filename):
     # for people in ourlists:
     #     people = people.sort()
     
-    all_students = [fall_15, winter_16, summer_16, spring_16, ghosts]
+    all_students = [fall_15, winter_16, spring_16, summer_16, ghosts]
 
     return all_students
 
@@ -105,6 +105,34 @@ def hogwarts_by_house(filename):
 
     # Code goes here
 
+    our_data = open(filename,"r")
+
+    for record in our_data:
+        record = record.strip().split("|")
+        last_name = record[1]
+        house = record[2]
+        identity = record[4]
+        if house == "Gryffindor":
+            gryffindor.append(last_name)
+        elif house == "Hufflepuff":
+            hufflepuff.append(last_name)
+        elif house == "Ravenclaw":
+            ravenclaw.append(last_name)
+        elif house == "Slytherin":
+            slytherin.append(last_name)
+        elif house == "Dumbledore's Army":
+            dumbledores_army.append(last_name)
+        elif identity == "G":
+            ghosts.append(last_name)
+        elif identity == "I":
+            instructors.append(last_name)
+
+        all_hogwarts = [dumbledores_army, gryffindor, hufflepuff,
+                        ravenclaw, slytherin, ghosts, instructors]
+
+        for lst in all_hogwarts:
+            lst.sort()
+
     return all_hogwarts
 
 
@@ -123,6 +151,14 @@ def all_students_tuple_list(filename):
 
     student_list = []
 
+    our_data = open(filename,"r")
+
+    for record in our_data:
+        record = record.strip().split("|")
+        full_name = " ".join(record[0:2])
+        identity = record[4]
+        if identity != "I" and identity != "G":
+            
     # Code goes here
 
     return student_list
