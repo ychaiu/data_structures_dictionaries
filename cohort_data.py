@@ -156,9 +156,12 @@ def all_students_tuple_list(filename):
     for record in our_data:
         record = record.strip().split("|")
         full_name = " ".join(record[0:2])
+        house = record[2]
+        advisor = record[3]
         identity = record[4]
         if identity != "I" and identity != "G":
-            
+            student_list.append((full_name, house, advisor, identity))
+
     # Code goes here
 
     return student_list
@@ -186,7 +189,15 @@ def find_cohort_by_student_name(student_list):
 
     # Code goes here
 
-    return "Student not found."
+    find_who = input("Who are you looking for?")
+
+    for record in student_list:
+        if find_who == record[0]:
+            print(f'{record[0]} was in the {record[3]} cohort.')
+            return 
+        return "Student not found."
+
+   
 
 
 ##########################################################################################
@@ -206,10 +217,16 @@ def find_name_duplicates(filename):
     """
 
     duplicate_names = set()
-
-    # Code goes here
-
-    return duplicate_names
+    name_count = {}
+    our_data = open(filename,"r")
+    for record in our_data:
+        record = record.strip().split("|")
+        first_name, last_name, house, advisor, cohort = record
+        name_count[last_name] = name_count.get(last_name, 0) + 1
+        if name_count[last_name] > 1:
+            duplicate_names.add(last_name)
+    print(duplicate_names)
+    return
 
 
 def find_house_members_by_student_name(student_list):
@@ -238,17 +255,32 @@ def find_house_members_by_student_name(student_list):
 
      """
 
-    # Code goes here
+    user_student = input("What's the name of the student?")
+    # ('Harry Potter', 'Gryffindor', 'McGonagall', 'Fall 2015')
+    for student_tuple in student_list:
+        full_name, house, advisor, cohort = student_tuple
+        if user_student == full_name:
+            print(f'{user_student} was in house {house} in the {cohort} cohort.')
+            print("The following students are also in their house:")
+     
+            for other_tuple in student_list:
+                if (other_tuple[3] == cohort
+                    and other_tuple[1] == house
+                    and other_tuple[0] != full_name):
+                    print(other_tuple[0])
 
-    return
-
+            return
+    print("Student not found.")
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
 
-# find_cohort_by_student_name(all_students_data)
-# find_house_members_by_student_name(all_students_data)
+filename = "cohort_data.txt"
+# print(find_cohort_by_student_name(all_students_tuple_list(filename)))
+#print(find_cohort_by_student_name())
 
+find_house_members_by_student_name(all_students_tuple_list(filename))
+# find_name_duplicates(filename)
 
 ##############################################################################
 # END OF MAIN EXERCISE.  Yay!  You did it! You Rock!
@@ -256,9 +288,9 @@ def find_house_members_by_student_name(student_list):
 
 
 
-if __name__ == "__main__":
-    import doctest
+# if __name__ == "__main__":
+#     import doctest
 
-    result = doctest.testmod()
-    if result.failed == 0:
-        print("ALL TESTS PASSED")
+#     result = doctest.testmod()
+#     if result.failed == 0:
+#         print("ALL TESTS PASSED")
